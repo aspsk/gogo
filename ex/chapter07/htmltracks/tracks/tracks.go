@@ -15,7 +15,7 @@ type Track struct {
 	Length time.Duration
 }
 
-var tracks = []*Track{
+var TrackList = []*Track{
 	{"Go", "Delilah", "From the Roots Up", 2012, length("3m38s")},
 	{"Go", "Moby", "Moby", 1992, length("3m37s")},
 	{"Go Ahead", "Alicia Keys", "As I Am", 2007, length("4m36s")},
@@ -42,13 +42,13 @@ func printTracks(tracks []*Track) {
 }
 
 type Tracks struct {
-	t []*Track
+	T []*Track
 	history []string
-	maxdepth int
+	Maxdepth int
 }
 
 func (tl *Tracks) Len() int {
-	return len(tl.t)
+	return len(tl.T)
 }
 
 func b2i(b bool) int {
@@ -62,24 +62,24 @@ func b2i(b bool) int {
 func (tl *Tracks) less(column string, i, j int) int {
 	switch column {
 		case "Title":
-			if tl.t[i].Title != tl.t[j].Title {
-				return b2i(tl.t[i].Title < tl.t[j].Title)
+			if tl.T[i].Title != tl.T[j].Title {
+				return b2i(tl.T[i].Title < tl.T[j].Title)
 			}
 		case "Artist":
-			if tl.t[i].Artist != tl.t[j].Artist {
-				return b2i(tl.t[i].Artist < tl.t[j].Artist)
+			if tl.T[i].Artist != tl.T[j].Artist {
+				return b2i(tl.T[i].Artist < tl.T[j].Artist)
 			}
 		case "Album":
-			if tl.t[i].Album != tl.t[j].Album {
-				return b2i(tl.t[i].Album < tl.t[j].Album)
+			if tl.T[i].Album != tl.T[j].Album {
+				return b2i(tl.T[i].Album < tl.T[j].Album)
 			}
 		case "Year":
-			if tl.t[i].Year != tl.t[j].Year {
-				return b2i(tl.t[i].Year < tl.t[j].Year)
+			if tl.T[i].Year != tl.T[j].Year {
+				return b2i(tl.T[i].Year < tl.T[j].Year)
 			}
 		case "Length":
-			if tl.t[i].Length != tl.t[j].Length {
-				return b2i(tl.t[i].Length < tl.t[j].Length)
+			if tl.T[i].Length != tl.T[j].Length {
+				return b2i(tl.T[i].Length < tl.T[j].Length)
 			}
 	}
 	return 0
@@ -109,11 +109,11 @@ func (tl *Tracks) AddHistory(column string) {
 		tl.history = n
 	}
 
-	if len(tl.history) > tl.maxdepth {
-		tl.history = tl.history[:tl.maxdepth]
+	if len(tl.history) > tl.Maxdepth {
+		tl.history = tl.history[:tl.Maxdepth]
 	}
 }
 
 func (tl *Tracks) Swap(i, j int) {
-	tl.t[i], tl.t[j] = tl.t[j], tl.t[i]
+	tl.T[i], tl.T[j] = tl.T[j], tl.T[i]
 }
