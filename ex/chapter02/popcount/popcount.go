@@ -1,21 +1,28 @@
 package popcount
 
+import "sync"
+
+var initPCOnce sync.Once
 var pc [256]byte
+
+var initPC2Once sync.Once
 var pc2 [65536]byte
 
-func init() {
-
+func initPopcountPC() {
 	for i := range pc {
 		pc[i] = pc[i/2] + byte(i&1)
 	}
+}
 
+func initPopcountPC2() {
 	for i := range pc2 {
 		pc2[i] = pc2[i/2] + byte(i&1)
 	}
-
 }
 
 func PopCount(x uint64) int {
+
+	initPCOnce.Do(initPopcountPC)
 
 	return int(pc[byte(x>>(0*8))] + pc[byte(x>>(1*8))] +
 		pc[byte(x>>(2*8))] + pc[byte(x>>(3*8))] +
@@ -26,11 +33,14 @@ func PopCount(x uint64) int {
 
 func PopCount2(x uint64) int {
 
+	initPC2Once.Do(initPopcountPC2)
 	return int(pc2[uint16(x>>(0*8))] + pc2[uint16(x>>(2*8))] + pc2[uint16(x>>(4*8))] + pc2[uint16(x>>(6*8))])
 
 }
 
 func PopCountLoop(x uint64) (ret int) {
+
+	initPCOnce.Do(initPopcountPC)
 
 	for i := uint(0); i < 8; i++ {
 		ret += int(pc[byte(x>>(i*8))])
