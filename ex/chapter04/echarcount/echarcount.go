@@ -45,10 +45,11 @@ func count(r rune) {
 
 }
 
-func main() {
+func doit(R io.Reader, W io.Writer) {
+
 	invalid := 0
 
-	in := bufio.NewReader(os.Stdin)
+	in := bufio.NewReader(R)
 	for {
 		r, n, err := in.ReadRune()
 		if err == io.EOF {
@@ -67,7 +68,7 @@ func main() {
 	}
 
 	if invalid > 0 {
-		fmt.Printf("\n%d invalid UTF-8 characters\n", invalid)
+		fmt.Fprintf(W, "\n%d invalid UTF-8 characters\n", invalid)
 	}
 
 	keys := []string{}
@@ -79,7 +80,13 @@ func main() {
 	for _, key := range keys {
 		n := counters[key].n
 		if n > 0 {
-			fmt.Printf("\n%d %ss", n, key)
+			fmt.Fprintf(W, "\n%d %ss", n, key)
 		}
 	}
+
+}
+
+
+func main() {
+	doit(os.Stdin, os.Stdout)
 }
