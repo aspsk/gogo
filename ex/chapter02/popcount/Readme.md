@@ -45,3 +45,8 @@ meaningful (sorted from the best to worse):
 | `PopCountLoop`      | 192832530 | 19.3 |
 | `PopCountShift`     | 442337802 | 44.2 |
 | `PopCountC`         | 680730800 | 68.1 |
+
+# Exercise 11.6
+
+Write benchmarks to compare the `PopCount` implementation in Section 2.6.2 with
+your solutions to Exercise 2.4 and Exercise 2.5.
